@@ -11,7 +11,7 @@ using RetailInventory.Data;
 namespace RetailInventory.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260720101351_InitialCreate")]
+    [Migration("20260720171810_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
