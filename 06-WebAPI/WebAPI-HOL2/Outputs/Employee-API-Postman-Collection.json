@@ -1,0 +1,156 @@
+{
+  "info": {
+    "_postman_id": "employee-api-collection",
+    "name": "Employee API - HOL2",
+    "description": "Collection for testing Employee API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET All Employees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5094/api/Emp",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5094",
+          "path": [
+            "api",
+            "Emp"
+          ]
+        },
+        "description": "Retrieve all employees from the database"
+      },
+      "response": []
+    },
+    {
+      "name": "GET Employee by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5094/api/Emp/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5094",
+          "path": [
+            "api",
+            "Emp",
+            "1"
+          ]
+        },
+        "description": "Retrieve a specific employee by their ID"
+      },
+      "response": []
+    },
+    {
+      "name": "POST Create Employee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"David Wilson\",\n  \"salary\": 8500\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5094/api/Emp",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5094",
+          "path": [
+            "api",
+            "Emp"
+          ]
+        },
+        "description": "Create a new employee"
+      },
+      "response": []
+    },
+    {
+      "name": "PUT Update Employee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice Johnson Updated\",\n  \"salary\": 5500\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5094/api/Emp/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5094",
+          "path": [
+            "api",
+            "Emp",
+            "1"
+          ]
+        },
+        "description": "Update an existing employee"
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE Employee",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5094/api/Emp/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5094",
+          "path": [
+            "api",
+            "Emp",
+            "3"
+          ]
+        },
+        "description": "Delete an employee"
+      },
+      "response": []
+    }
+  ]
+}
