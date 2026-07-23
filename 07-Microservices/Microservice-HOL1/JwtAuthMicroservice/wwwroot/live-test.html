@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Live JWT API Test</title>
+  <style>
+    body { max-width: 1000px; margin: 48px auto; font-family: Arial, sans-serif; color: #172033; }
+    h1 { margin-bottom: 6px; } .sub { color: #526176; margin-bottom: 28px; }
+    .status { display: inline-block; padding: 8px 14px; border-radius: 5px; color: white; font-weight: 700; }
+    .ok { background: #16803c; } .unauthorized { background: #b42318; }
+    .request { margin: 24px 0 12px; padding: 18px; background: #f1f5f9; border-left: 4px solid #2563eb; white-space: pre-wrap; font-family: Consolas, monospace; }
+    pre { padding: 20px; background: #111827; color: #d1fae5; border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; }
+    .live { color: #16803c; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <h1>JWT Authentication — Live API Output</h1>
+  <p class="sub"><span class="live">● LIVE</span> Browser request executed against this running ASP.NET Core API.</p>
+  <div id="result">Calling API…</div>
+  <script>
+    const mode = new URLSearchParams(location.search).get('mode') || 'login';
+    const endpoint = '/api/secure/data';
+    const loginBody = { username: 'kavya', password: 'Password@123' };
+    const pretty = value => JSON.stringify(value, null, 2);
+
+    async function run() {
+      let response, requestText;
+      if (mode === 'login') {
+        requestText = 'POST ' + location.origin + '/api/auth/login\nContent-Type: application/json\n\n' + pretty(loginBody);
+        response = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(loginBody) });
+      } else if (mode === 'authorized') {
+        const login = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(loginBody) });
+        const token = (await login.json()).token;
+        requestText = 'GET ' + location.origin + endpoint + '\nAuthorization: Bearer ' + token.slice(0, 36) + '…';
+        response = await fetch(endpoint, { headers: { Authorization: 'Bearer ' + token } });
+      } else {
+        requestText = 'GET ' + location.origin + endpoint + '\n(no Authorization header)';
+        response = await fetch(endpoint);
+      }
+      const text = await response.text();
+      let body;
+      try { body = JSON.parse(text); } catch { body = text || '(empty response body)'; }
+      const success = response.ok;
+      document.querySelector('#result').innerHTML = `
+        <span class="status ${success ? 'ok' : 'unauthorized'}">HTTP ${response.status} ${response.statusText}</span>
+        <div class="request">${requestText.replaceAll('<', '&lt;')}</div>
+        <h3>Response body</h3><pre>${typeof body === 'string' ? body : pretty(body)}</pre>`;
+      window.scrollTo(0, 0);
+    }
+    run().catch(error => document.querySelector('#result').textContent = error);
+  </script>
+</body>
+</html>
