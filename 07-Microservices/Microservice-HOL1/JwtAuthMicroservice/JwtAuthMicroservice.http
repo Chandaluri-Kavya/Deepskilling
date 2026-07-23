@@ -1,0 +1,17 @@
+@JwtAuthMicroservice_HostAddress = http://localhost:5182
+
+### Login with demo credentials
+POST {{JwtAuthMicroservice_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "kavya",
+  "password": "Password@123"
+}
+
+### Protected route without a token (401)
+GET {{JwtAuthMicroservice_HostAddress}}/api/secure/data
+
+### Protected route with the token received from login (200)
+GET {{JwtAuthMicroservice_HostAddress}}/api/secure/data
+Authorization: Bearer {{token}}

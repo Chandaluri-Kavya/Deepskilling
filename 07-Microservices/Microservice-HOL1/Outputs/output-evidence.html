@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>JWT Authentication Output Evidence</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 720px; background: #0f172a; color: #e2e8f0; font-family: Segoe UI, Arial, sans-serif; padding: 58px 72px; }
+    .card { display: none; width: 1056px; min-height: 570px; padding: 38px 42px; background: #172554; border: 1px solid #334155; border-radius: 16px; box-shadow: 0 18px 45px #020617; }
+    .card:target { display: block; }
+    h1 { margin: 0 0 10px; font-size: 32px; color: #f8fafc; }
+    .sub { color: #94a3b8; font-size: 18px; margin-bottom: 30px; }
+    .tag { display: inline-block; padding: 7px 13px; border-radius: 999px; font-weight: 700; background: #14532d; color: #dcfce7; }
+    .bad { background: #7f1d1d; color: #fee2e2; }
+    .request { margin: 25px 0 14px; padding: 17px; border-left: 4px solid #38bdf8; background: #0f172a; font: 17px Consolas, monospace; color: #bae6fd; white-space: pre-wrap; }
+    pre { margin: 0; padding: 22px; border-radius: 8px; background: #020617; color: #bbf7d0; font: 17px Consolas, monospace; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .note { margin-top: 28px; color: #cbd5e1; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <script>document.write('<style>#' + (location.hash.slice(1) || 'login') + '{display:block}</style>');</script>
+  <section class="card" id="login">
+    <h1>JWT Login — Successful</h1>
+    <div class="sub">ASP.NET Core Web API · Question 1 output</div>
+    <span class="tag">HTTP 200 OK</span>
+    <div class="request">POST http://localhost:5182/api/auth/login
+Content-Type: application/json
+
+{ "username": "kavya", "password": "Password@123" }</div>
+    <pre>{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expiresAtUtc": "2026-07-23T13:36:40.7773457Z",
+  "username": "kavya"
+}</pre>
+    <p class="note">A signed JWT is returned after successful credential validation.</p>
+  </section>
+  <section class="card" id="authorized">
+    <h1>Protected Endpoint — Authorized</h1>
+    <div class="sub">JWT token sent in the Authorization header</div>
+    <span class="tag">HTTP 200 OK</span>
+    <div class="request">GET http://localhost:5182/api/secure/data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</div>
+    <pre>{
+  "message": "This is protected data.",
+  "authenticatedUser": "kavya",
+  "userId": "1"
+}</pre>
+    <p class="note">The <code>[Authorize]</code> endpoint accepts the valid JWT and exposes the authenticated identity.</p>
+  </section>
+  <section class="card" id="unauthorized">
+    <h1>Protected Endpoint — No Token</h1>
+    <div class="sub">JWT authentication is required for this route</div>
+    <span class="tag bad">HTTP 401 Unauthorized</span>
+    <div class="request">GET http://localhost:5182/api/secure/data
+(no Authorization header)</div>
+    <pre>HTTP/1.1 401 Unauthorized
+Content-Length: 0</pre>
+    <p class="note">The request is rejected before the controller action runs.</p>
+  </section>
+</body>
+</html>
