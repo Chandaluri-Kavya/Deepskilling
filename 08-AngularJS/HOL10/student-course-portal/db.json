@@ -1,7 +1,0 @@
-{ "courses": [
-  { "id": 1, "name": "Data Structures", "code": "CS101", "credits": 4, "gradeStatus": "passed" },
-  { "id": 2, "name": "Angular Fundamentals", "code": "NG201", "credits": 3, "gradeStatus": "pending" },
-  { "id": 3, "name": "Database Systems", "code": "DB110", "credits": 4, "gradeStatus": "failed" },
-  { "id": 4, "name": "Web API Design", "code": "API220", "credits": 3, "gradeStatus": "passed" },
-  { "id": 5, "name": "Cloud Essentials", "code": "CL101", "credits": 2, "gradeStatus": "pending" }
-], "students": [], "enrollments": [] }

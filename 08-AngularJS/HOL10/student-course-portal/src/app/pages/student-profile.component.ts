@@ -1,2 +1,0 @@
-import { Component } from '@angular/core'; import { AsyncPipe, NgFor } from '@angular/common'; import { Store } from '@ngrx/store'; import { selectEnrolledCourses } from '../store/enrollment/enrollment.selectors';
-@Component({ standalone: true, imports: [AsyncPipe, NgFor], template: `<h1>Student Profile</h1><p>Enrolled courses:</p><ul><li *ngFor="let course of enrolledCourses$ | async">{{ course.name }} ({{ course.code }})</li></ul>` }) export class StudentProfileComponent { enrolledCourses$ = this.store.select(selectEnrolledCourses); constructor(private store: Store) {} }
