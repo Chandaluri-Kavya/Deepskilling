@@ -1,0 +1,2 @@
+import { Component } from '@angular/core'; import { NgFor } from '@angular/common'; import { NotificationService } from '../services/notification.service';
+@Component({ selector: 'app-notification', imports: [NgFor], providers: [NotificationService], template: `<p *ngFor="let message of notification.messages">{{ message }}</p>` }) export class NotificationComponent { constructor(public notification: NotificationService) {} /* Component-level provider intentionally creates an isolated service instance for this component and its children. */ }
